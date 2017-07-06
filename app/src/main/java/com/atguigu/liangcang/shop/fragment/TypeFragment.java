@@ -28,6 +28,8 @@ public class TypeFragment extends BaseFragment {
     @Override
     public void initData() {
 
+
+
     }
 
     @Override
