@@ -5,9 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.atguigu.liangcang.R;
-import com.atguigu.liangcang.shop.bean.TypeBean;
+import com.atguigu.liangcang.shop.bean.BrandBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -16,14 +17,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/7/6.
+ * Created by Administrator on 2017/7/7.
  */
 
-public class TypeAdapter extends BaseAdapter {
+public class BrandAdapter extends BaseAdapter {
     private final Context context;
-    private final List<TypeBean.DataBean.ItemsBean> datas;
+    private final List<BrandBean.DataBean.ItemsBean> datas;
 
-    public TypeAdapter(Context context, List<TypeBean.DataBean.ItemsBean> items) {
+    public BrandAdapter(Context context, List<BrandBean.DataBean.ItemsBean> items) {
         this.context = context;
         this.datas = items;
     }
@@ -47,20 +48,22 @@ public class TypeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_type, null);
+            convertView = View.inflate(context, R.layout.item_brand, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
-        }else{
+        }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        BrandBean.DataBean.ItemsBean itemsBean = datas.get(position);
 
-        TypeBean.DataBean.ItemsBean itemsBean = datas.get(position);
+        viewHolder.tvName.setText(itemsBean.getBrand_name());
         Picasso.with(context)
-                .load(itemsBean.getCover_new_img())
+                .load(itemsBean.getBrand_logo())
                 .placeholder(R.drawable.atguigu_logo )
                 .error(R.drawable.atguigu_logo )
                 .into(viewHolder.ivIcon);
+
 
         return convertView;
     }
@@ -68,6 +71,8 @@ public class TypeAdapter extends BaseAdapter {
     class ViewHolder {
         @Bind(R.id.iv_icon)
         ImageView ivIcon;
+        @Bind(R.id.tv_name)
+        TextView tvName;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
