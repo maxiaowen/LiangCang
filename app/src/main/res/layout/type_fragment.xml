@@ -15,7 +15,6 @@
     <GridView
         android:id="@+id/gv"
         android:numColumns="2"
-        android:stretchMode="columnWidth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

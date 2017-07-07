@@ -1,11 +1,14 @@
 package com.atguigu.liangcang.shop.fragment;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.shop.activity.DetailsActivity;
 import com.atguigu.liangcang.shop.adapter.TypeAdapter;
 import com.atguigu.liangcang.shop.bean.TypeBean;
 import com.atguigu.liangcang.utils.UIUtils;
@@ -73,12 +76,21 @@ public class TypeFragment extends BaseFragment {
 
     //解析数据
     private void parseData(String json) {
-        TypeBean typeBean = new Gson().fromJson(json, TypeBean.class);
+        final TypeBean typeBean = new Gson().fromJson(json, TypeBean.class);
 
 //        Log.e("TAG","name ==" + typeBean.getData().getItems().get(0).getCat_name());
         adapter = new TypeAdapter(context,typeBean.getData().getItems());
         gv.setAdapter(adapter);
 
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                UIUtils.showToast(typeBean.getData().getItems().get(position).getCat_name());
+
+                Intent intent = new Intent(context, DetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
