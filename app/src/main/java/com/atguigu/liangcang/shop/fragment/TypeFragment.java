@@ -88,6 +88,7 @@ public class TypeFragment extends BaseFragment {
 //                UIUtils.showToast(typeBean.getData().getItems().get(position).getCat_name());
 
                 Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("position",position+"");
                 startActivity(intent);
             }
         });
