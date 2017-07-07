@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.shop.fragment;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,6 +8,7 @@ import android.widget.ListView;
 
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.shop.activity.SpecialActivity;
 import com.atguigu.liangcang.shop.adapter.SpecialAdapter;
 import com.atguigu.liangcang.shop.bean.SpecialBean;
 import com.atguigu.liangcang.utils.UIUtils;
@@ -80,6 +82,9 @@ public class SpecialFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UIUtils.showToast(specialBean.getData().getItems().get(position).getTopic_name());
 
+                Intent intent = new Intent(context, SpecialActivity.class);
+                intent.putExtra("url",specialBean.getData().getItems().get(position).getTopic_url());
+                startActivity(intent);
 
             }
         });
