@@ -1,30 +1,38 @@
 package com.atguigu.liangcang.daren.fragment;
 
-import android.graphics.Color;
-import android.view.Gravity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
+import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/7/6.
  */
 
 public class DaRenFragment extends BaseFragment {
-    TextView textView;
+    @Bind(R.id.rv_daren)
+    RecyclerView rvDaren;
+
     @Override
     public View initView() {
-        textView = new TextView(context);
-        textView.setTextSize(30);
-        textView.setTextColor(Color.RED);
-        textView.setGravity(Gravity.CENTER);
-        return textView;
+        View view = View.inflate(context, R.layout.fragment_daren, null);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void initData() {
 
-        textView.setText("达人");
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
