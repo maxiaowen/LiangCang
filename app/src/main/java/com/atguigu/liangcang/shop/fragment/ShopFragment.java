@@ -3,6 +3,8 @@ package com.atguigu.liangcang.shop.fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.activity.MainActivity;
@@ -25,6 +27,12 @@ public class ShopFragment extends BaseFragment {
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
     ViewPager viewpager;
+    @Bind(R.id.base_search)
+    ImageView baseSearch;
+    @Bind(R.id.base_cart)
+    ImageView baseCart;
+    @Bind(R.id.base_title)
+    TextView baseTitle;
 
     private List<BaseFragment> fragments;
     private ShopAdapter adapter;
@@ -34,6 +42,14 @@ public class ShopFragment extends BaseFragment {
         View view = View.inflate(context, R.layout.pager_shop, null);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void initTitle() {
+        super.initTitle();
+        baseCart.setVisibility(View.VISIBLE);
+        baseSearch.setVisibility(View.VISIBLE);
+        baseTitle.setText("首页");
     }
 
     @Override
@@ -47,11 +63,10 @@ public class ShopFragment extends BaseFragment {
         fragments.add(new GiftFragment());
 
         MainActivity mainActivity = (MainActivity) context;
-        adapter = new ShopAdapter(mainActivity.getSupportFragmentManager(),fragments);
+        adapter = new ShopAdapter(mainActivity.getSupportFragmentManager(), fragments);
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
     }
-
 
 
     @Override
@@ -59,4 +74,6 @@ public class ShopFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }

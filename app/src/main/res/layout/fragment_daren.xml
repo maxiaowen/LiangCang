@@ -5,6 +5,9 @@
     android:orientation="vertical">
 
 
+    <include layout="@layout/base_title"/>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_daren"
         android:layout_width="match_parent"
