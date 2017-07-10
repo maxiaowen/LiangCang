@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_default"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#aaaaaa"
+            android:button="@null"
+            android:gravity="center_vertical"
+            android:text="默认推荐"
+            android:textColor="#000000" />
+
+
+        <RadioButton
+            android:id="@+id/rb_most"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#aaaaaa"
+            android:button="@null"
+            android:gravity="center_vertical"
+            android:text="最多推荐"
+            android:textColor="#000000" />
+
+
+        <RadioButton
+            android:id="@+id/rb_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#aaaaaa"
+            android:button="@null"
+            android:gravity="center_vertical"
+            android:text="最受欢迎"
+            android:textColor="#000000" />
+
+
+        <RadioButton
+            android:id="@+id/rb_new"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#aaaaaa"
+            android:button="@null"
+            android:gravity="center_vertical"
+            android:text="最新推荐"
+            android:textColor="#000000" />
+
+
+        <RadioButton
+            android:id="@+id/rb_join"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#aaaaaa"
+            android:button="@null"
+            android:gravity="center_vertical"
+            android:text="最新加入"
+            android:textColor="#000000" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_kong"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#56000000" />
+
+</LinearLayout>
