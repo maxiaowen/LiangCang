@@ -1,29 +1,33 @@
-package com.atguigu.liangcang.shop.adapter;
+package com.atguigu.liangcang.elite.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.atguigu.liangcang.base.BaseFragment;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/6.
+ * Created by Administrator on 2017/7/10.
  */
 
-public class ShopAdapter extends FragmentStatePagerAdapter {
+public class EliteAdapter extends FragmentStatePagerAdapter {
 
 
     private final List<BaseFragment> fragments;
 
-    private String[] datas = {"分类", "品牌", "首页", "专题", "礼物"};
+    private String[] datas = {"推荐","段子"};
 
-    public ShopAdapter(FragmentManager fm, List<BaseFragment> fragments) {
+    public EliteAdapter(FragmentManager fm, List<BaseFragment> fragments) {
         super(fm);
+
+        Log.e("TAG","Fragements=="+fragments.get(0));
         this.fragments = fragments;
 
     }
+
 
     @Override
     public Fragment getItem(int position) {
@@ -32,12 +36,13 @@ public class ShopAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return fragments == null? 0 :fragments.size();
+        return  fragments.size();
     }
 
 
     @Override
     public CharSequence getPageTitle(int position) {
         return datas[position];
+
     }
 }

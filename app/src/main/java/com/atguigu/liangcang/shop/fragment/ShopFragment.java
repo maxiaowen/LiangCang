@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atguigu.liangcang.R;
-import com.atguigu.liangcang.activity.MainActivity;
 import com.atguigu.liangcang.base.BaseFragment;
 import com.atguigu.liangcang.shop.adapter.ShopAdapter;
 
@@ -49,7 +48,7 @@ public class ShopFragment extends BaseFragment {
         super.initTitle();
         baseCart.setVisibility(View.VISIBLE);
         baseSearch.setVisibility(View.VISIBLE);
-        baseTitle.setText("首页");
+        baseTitle.setText("商店");
     }
 
     @Override
@@ -62,10 +61,12 @@ public class ShopFragment extends BaseFragment {
         fragments.add(new SpecialFragment());
         fragments.add(new GiftFragment());
 
-        MainActivity mainActivity = (MainActivity) context;
-        adapter = new ShopAdapter(mainActivity.getSupportFragmentManager(), fragments);
+        adapter = new ShopAdapter(getChildFragmentManager(), fragments);
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
+
+
+
     }
 
 
