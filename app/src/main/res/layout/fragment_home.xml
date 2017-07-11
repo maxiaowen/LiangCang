@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:isLoadMore="true"
+        app:overlay="true"
+        app:wave_color="#90ffffff"
+        app:wave_show="true">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.cjj.MaterialRefreshLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/progressbar"
+            android:paddingLeft="10dp"
+            android:text="请稍后..." />
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
