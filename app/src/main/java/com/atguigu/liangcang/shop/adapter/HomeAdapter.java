@@ -1,6 +1,7 @@
 package com.atguigu.liangcang.shop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.atguigu.liangcang.R;
+import com.atguigu.liangcang.shop.activity.SpecialActivity;
 import com.atguigu.liangcang.shop.bean.HomeBean;
 import com.atguigu.liangcang.utils.GlideImageLoader;
 import com.atguigu.liangcang.utils.UIUtils;
@@ -152,12 +154,22 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX data) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX data) {
             Picasso.with(context)
                     .load(data.getOne().getPic_url())
                     .placeholder(R.drawable.atguigu_logo)
                     .error(R.drawable.atguigu_logo)
                     .into(ivIcon);
+
+            ivIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转到WebView页面Activity
+                    Intent intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getOne().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -173,7 +185,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX data) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX data) {
             Picasso.with(context)
                     .load(data.getOne().getPic_url())
                     .placeholder(R.drawable.atguigu_logo)
@@ -185,6 +197,25 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     .placeholder(R.drawable.atguigu_logo)
                     .error(R.drawable.atguigu_logo)
                     .into(ivIcon2);
+
+            ivIcon1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转到WebView页面Activity
+                   Intent intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getOne().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
+            ivIcon2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转到WebView页面Activity
+                    Intent intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getTwo().getTopic_url());
+                    context.startActivity(intent);
+                }
+            });
 
 
         }
@@ -231,7 +262,54 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     .error(R.drawable.atguigu_logo)
                     .into(ivIcon4);
 
+            ivIcon1.setOnClickListener(new MyOnClickListener(data));
+            ivIcon2.setOnClickListener(new MyOnClickListener(data));
+            ivIcon3.setOnClickListener(new MyOnClickListener(data));
+            ivIcon4.setOnClickListener(new MyOnClickListener(data));
 
+
+        }
+    }
+
+    class MyOnClickListener implements View.OnClickListener {
+
+        private final HomeBean.DataBean.ItemsBean.ListBeanX data;
+
+        public MyOnClickListener(HomeBean.DataBean.ItemsBean.ListBeanX data) {
+            this.data = data;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.iv_icon1:
+                    //跳转到WebView页面Activity
+                    Intent intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getOne().getTopic_url());
+                    context.startActivity(intent);
+                    break;
+
+                case R.id.iv_icon2:
+                    //跳转到WebView页面Activity
+                    intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getTwo().getTopic_url());
+                    context.startActivity(intent);
+                    break;
+
+                case R.id.iv_icon3:
+                    //跳转到WebView页面Activity
+                    intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getThree().getTopic_url());
+                    context.startActivity(intent);
+                    break;
+
+                case R.id.iv_icon4:
+                    //跳转到WebView页面Activity
+                    intent = new Intent(context, SpecialActivity.class);
+                    intent.putExtra("url", data.getFour().getTopic_url());
+                    context.startActivity(intent);
+                    break;
+            }
         }
     }
 
@@ -245,7 +323,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomeBean.DataBean.ItemsBean.ListBeanX data) {
+        public void setData(final HomeBean.DataBean.ItemsBean.ListBeanX data) {
 
             //设置Banner 数据
             List<String> images = new ArrayList<>();
@@ -259,36 +337,27 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         @Override
                         public void OnBannerClick(int position) {
 
-                            UIUtils.showToast("position==" + position);
+                            if (position == 0) {
 
-//                            if(position < banner_info.size()){
-//                                String product_id = "";
-//                                String name = "";
-//                                String cover_price = "";
-//                                if (position == 0) {
-//                                    product_id = "627";
-//                                    cover_price = "32.00";
-//                                    name = "剑三T恤批发";
-//                                } else if (position == 1) {
-//                                    product_id = "21";
-//                                    cover_price = "8.00";
-//                                    name = "同人原创】剑网3 剑侠情缘叁 Q版成男 口袋胸针";
-//                                } else {
-//                                    product_id = "1341";
-//                                    cover_price = "50.00";
-//                                    name = "【蓝诺】《天下吾双》 剑网3同人本";
-//                                }
-//                                String image = banner_info.get(position).getImage();
-//                                GoodsBean goodsBean = new GoodsBean();
-//                                goodsBean.setName(name);
-//                                goodsBean.setCover_price(cover_price);
-//                                goodsBean.setFigure(image);
-//                                goodsBean.setProduct_id(product_id);
-//
-//                                Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-//                                intent.putExtra(GOODS_BEAN, goodsBean);
-//                                mContext.startActivity(intent);
-//                            }
+                                //跳转到WebView页面Activity
+                                Intent intent = new Intent(context, SpecialActivity.class);
+                                intent.putExtra("url", data.getList().get(position).getTopic_url());
+                                context.startActivity(intent);
+
+                            } else if (position == 1) {
+
+                                UIUtils.showToast("暂时没有数据");
+                                //跳转到详情Activity
+//                                Intent intent = new Intent(context, DetailsActivity.class);
+//                                intent.putExtra("url",???);
+//                                context.startActivity(intent);
+
+
+                            } else {
+                                UIUtils.showToast("position==" + position);
+                            }
+
+
                         }
                     })
                     .start();
