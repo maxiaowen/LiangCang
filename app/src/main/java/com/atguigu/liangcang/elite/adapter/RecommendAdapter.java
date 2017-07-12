@@ -1,6 +1,7 @@
 package com.atguigu.liangcang.elite.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.atguigu.liangcang.R;
+import com.atguigu.liangcang.elite.activity.ShowImageAndGifActivity;
 import com.atguigu.liangcang.elite.bean.RecommendBean;
 import com.atguigu.liangcang.utils.UIUtils;
 import com.bumptech.glide.Glide;
@@ -186,25 +188,25 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             llDownload = (LinearLayout) convertView.findViewById(R.id.ll_download);
 
 //            //设置item的点击事件
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    RecommendBean.ListBean listEntity = datas.get(getLayoutPosition());
-//                    if(listEntity !=null ){
-//                        //3.传递视频列表
-//                        Intent intent = new Intent(context,ShowImageAndGifActivity.class);
-//                        if(listEntity.getType().equals("gif")){
-//                            String url = listEntity.getGif().getImages().get(0);
-//                            intent.putExtra("url",url);
-//                            context.startActivity(intent);
-//                        }else if(listEntity.getType().equals("image")){
-//                            String url = listEntity.getImage().getBig().get(0);
-//                            intent.putExtra("url",url);
-//                            context.startActivity(intent);
-//                        }
-//                    }
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RecommendBean.ListBean listEntity = datas.get(getLayoutPosition());
+                    if(listEntity !=null ){
+
+                        Intent intent = new Intent(context,ShowImageAndGifActivity.class);
+                        if(listEntity.getType().equals("gif")){
+                            String url = listEntity.getGif().getImages().get(0);
+                            intent.putExtra("url",url);
+                            context.startActivity(intent);
+                        }else if(listEntity.getType().equals("image")){
+                            String url = listEntity.getImage().getBig().get(0);
+                            intent.putExtra("url",url);
+                            context.startActivity(intent);
+                        }
+                    }
+                }
+            });
 
         }
 
