@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.atguigu.liangcang.shop.activity.DetailsActivity">
+
+    <include layout="@layout/base_title"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:text="价格筛选"
+            android:textColor="#000000"
+            android:paddingLeft="20dp"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:src="@drawable/arrow_down_big"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </LinearLayout>
+
+
 
     <GridView
         android:id="@+id/gridView"
@@ -12,5 +46,4 @@
         android:layout_height="wrap_content"
          />
 
-
-</RelativeLayout>
+</LinearLayout>

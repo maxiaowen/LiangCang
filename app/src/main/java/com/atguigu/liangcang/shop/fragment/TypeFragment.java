@@ -112,6 +112,7 @@ public class TypeFragment extends BaseFragment {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url",urls[position]);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
             }
         });
 

@@ -137,7 +137,6 @@ public class DaRenFragment extends BaseFragment {
         baseSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showPopupWindow();
                 //相对某个控件的位置（正左下方），无偏移
                 popupWindow.showAsDropDown(baseTitle);
 
@@ -248,6 +247,7 @@ public class DaRenFragment extends BaseFragment {
             }
         }
     }
+
 
     @Override
     public void onDestroyView() {
