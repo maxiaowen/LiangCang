@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.magazine.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.magazine.activity.MagazineActivity;
 import com.atguigu.liangcang.magazine.adapter.MagazineAdapter;
 import com.atguigu.liangcang.magazine.bean.Info;
 import com.atguigu.liangcang.magazine.bean.MagazineBean;
@@ -62,7 +64,14 @@ public class MagazineFragment extends BaseFragment {
 
         View view = View.inflate(context, R.layout.fragment_magazine, null);
         ButterKnife.bind(this, view);
+        showPopupWindow();
         return view;
+    }
+
+    private void showPopupWindow() {
+
+
+
     }
 
     @Override
@@ -81,7 +90,9 @@ public class MagazineFragment extends BaseFragment {
         rvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast("此处弹出鱼尾纹");
+
+                startActivity( new Intent(context, MagazineActivity.class));
+                getActivity().overridePendingTransition(R.anim.top_in,R.anim.bottom_out);
             }
         });
 
