@@ -1,6 +1,7 @@
 package com.atguigu.liangcang.shop.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -91,16 +92,35 @@ public class PurchaseActivity extends BaseActivity {
      */
     private int position;
 
+    //开启事务
+    private FragmentTransaction ft;
+
+
+
+    private DetailsFragment detailsFragment;
+    private MallFragment mallFragment;
+    private Bundle bundle;
+
 
     @Override
     public void initView() {
-       String goods_id = getIntent().getStringExtra("goods_id");
+        String goods_id = getIntent().getStringExtra("goods_id");
         url = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goods_id + "&sig=430BD99E6C913B8B8C3ED109737ECF15%7C830952120106768&v=1.0";
 
         // 初始化Fragment
         fragments = new ArrayList<>();
-        fragments.add(new DetailsFragment());
-        fragments.add(new MallFragment());
+        detailsFragment = new DetailsFragment();
+        mallFragment = new MallFragment();
+        bundle = new Bundle();
+
+        detailsFragment.setArguments(bundle);
+        mallFragment.setArguments(bundle);
+        //如果transaction  commit（）过  那么我们要重新得到transaction
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.commit();
+
+        fragments.add(detailsFragment);
+        fragments.add(mallFragment);
 
     }
 
@@ -149,6 +169,8 @@ public class PurchaseActivity extends BaseActivity {
         setData(purchaseBean);
 
 
+
+
     }
 
     private void setData(PurchaseBean data) {
@@ -176,9 +198,13 @@ public class PurchaseActivity extends BaseActivity {
 
         Picasso.with(this)
                 .load(data.getData().getItems().getBrand_info().getBrand_logo())
-                .placeholder(R.drawable.atguigu_logo )
-                .error(R.drawable.atguigu_logo )
+                .placeholder(R.drawable.atguigu_logo)
+                .error(R.drawable.atguigu_logo)
                 .into(ivBiao);
+
+
+        bundle.putSerializable("purchaseBean", data);
+
     }
 
     @Override
@@ -190,7 +216,7 @@ public class PurchaseActivity extends BaseActivity {
         rgButton.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_default://商品详情
                         position = 0;
                         rbDefault.setTextColor(Color.BLACK);
@@ -211,7 +237,7 @@ public class PurchaseActivity extends BaseActivity {
                 }
 
                 Fragment currentFragment = getFragment(position);//当前
-                switchFragment (currentFragment);
+                switchFragment(currentFragment);
             }
         });
 
@@ -221,26 +247,27 @@ public class PurchaseActivity extends BaseActivity {
 
     /**
      * 传入当前要显示的Fragment
+     *
      * @param currentFragment
      */
     private void switchFragment(Fragment currentFragment) {
-        if(tempFragment != currentFragment){
+        if (tempFragment != currentFragment) {
 
-            if(currentFragment != null){
+            if (currentFragment != null) {
                 //开启事务
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                if(!currentFragment.isAdded()){
+                ft = getSupportFragmentManager().beginTransaction();
+                if (!currentFragment.isAdded()) {
                     //隐藏之前显示的
-                    if(tempFragment != null){
+                    if (tempFragment != null) {
                         ft.hide(tempFragment);
                     }
                     //判断currentFragment 有没有添加，如果没有就添加
-                    ft.add(R.id.frame_layout,currentFragment);
+                    ft.add(R.id.frame_layout, currentFragment);
 
 
-                }else{
+                } else {
                     //隐藏之前显示的
-                    if(tempFragment != null){
+                    if (tempFragment != null) {
                         ft.hide(tempFragment);
                     }
                     //否则就显示
@@ -257,11 +284,12 @@ public class PurchaseActivity extends BaseActivity {
 
     /**
      * 根据位置得到Fragment
+     *
      * @param position
      * @return
      */
     private Fragment getFragment(int position) {
-        if(fragments != null && fragments.size() > 0){
+        if (fragments != null && fragments.size() > 0) {
             return fragments.get(position);
         }
         return null;
@@ -271,7 +299,6 @@ public class PurchaseActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_purchase;
     }
-
 
 
 }

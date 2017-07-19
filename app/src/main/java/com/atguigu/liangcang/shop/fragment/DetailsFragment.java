@@ -1,10 +1,8 @@
 package com.atguigu.liangcang.shop.fragment;
 
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
+import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
 
 /**
@@ -13,23 +11,18 @@ import com.atguigu.liangcang.base.BaseFragment;
 
 public class DetailsFragment extends BaseFragment {
 
-    private TextView textView;
-
 
     @Override
     public View initView() {
 
-        textView = new TextView(context);
+        View view = View.inflate(context, R.layout.fragment_details,null);
 
-        textView.setTextColor(Color.RED);
-        textView.setTextSize(30);
-        textView.setGravity(Gravity.CENTER);
-        return textView;
+
+        return view;
     }
 
     @Override
     public void initData() {
 
-        textView.setText("我是商品详情");
     }
 }

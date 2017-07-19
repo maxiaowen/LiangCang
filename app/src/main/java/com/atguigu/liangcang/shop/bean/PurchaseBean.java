@@ -1,12 +1,13 @@
 package com.atguigu.liangcang.shop.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/19.
  */
 
-public class PurchaseBean {
+public class PurchaseBean implements Serializable{
 
 
     /**
@@ -43,7 +44,7 @@ public class PurchaseBean {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable{
         /**
          * status : 0
          * server_time : 2017-07-19 10:05:27
@@ -109,7 +110,7 @@ public class PurchaseBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * has_more : false
          * num_items : 1
@@ -144,7 +145,7 @@ public class PurchaseBean {
             this.items = items;
         }
 
-        public static class ItemsBean {
+        public static class ItemsBean implements Serializable {
             /**
              * goods_id : 258055
              * goods_image : http://imgs-qn.iliangcang.com/ware/goods/big/2/258/258055.jpg?t=1497525912
@@ -499,7 +500,7 @@ public class PurchaseBean {
                 this.goods_info = goods_info;
             }
 
-            public static class BrandInfoBean {
+            public static class BrandInfoBean implements Serializable{
                 /**
                  * brand_id : 819
                  * brand_name : JEX捷古斯
@@ -545,7 +546,7 @@ public class PurchaseBean {
                 }
             }
 
-            public static class GoodGuideBean {
+            public static class GoodGuideBean implements Serializable{
                 /**
                  * title : 购物指南
                  * content : 所有商品均为正品保证。中国大陆地区免运费，默认商家合作快递。蜡烛、液态品、手表等含电池产品无法空运，运输时间相较普通空运件会更久。如出现产品质量问题请在签收后72小时内联系客服。
@@ -571,7 +572,7 @@ public class PurchaseBean {
                 }
             }
 
-            public static class SkuInfoBean {
+            public static class SkuInfoBean implements Serializable{
                 /**
                  * type_id : 7
                  * type_name : 数量
@@ -616,7 +617,7 @@ public class PurchaseBean {
                     this.attrList = attrList;
                 }
 
-                public static class AttrListBean {
+                public static class AttrListBean implements Serializable {
                     /**
                      * attr_id : 24
                      * attr_name : 一瓶
@@ -653,7 +654,7 @@ public class PurchaseBean {
                 }
             }
 
-            public static class SkuInvBean {
+            public static class SkuInvBean implements Serializable{
                 /**
                  * goods_sku_sn : 0101000000000000258055000700240000000000000000000000000000000000
                  * type_keys : 7
@@ -719,7 +720,7 @@ public class PurchaseBean {
                 }
             }
 
-            public static class GoodsInfoBean {
+            public static class GoodsInfoBean implements Serializable{
                 /**
                  * type : 1
                  * content : {"img":"http://imgs-qn.iliangcang.com//ware/ueditor/image/20170615/1497517601881120.jpg","width":661,"height":792,"length":79}
@@ -744,7 +745,7 @@ public class PurchaseBean {
                     this.content = content;
                 }
 
-                public static class ContentBean {
+                public static class ContentBean implements Serializable{
                     /**
                      * img : http://imgs-qn.iliangcang.com//ware/ueditor/image/20170615/1497517601881120.jpg
                      * width : 661
