@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.shop.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -144,21 +145,26 @@ public class DetailsActivity extends BaseActivity {
                         });
             }
         });
+
+        Log.e("TAG","url=="+url);
     }
 
     //解析数据
     private void parseData(String json) {
         final DetailsBean detailsBean = new Gson().fromJson(json, DetailsBean.class);
 
-        Log.e("TAG", "name ==" + detailsBean.getData().getItems().get(0).getGoods_name());
+//        Log.e("TAG", "name ==" + detailsBean.getData().getItems().get(0).getGoods_name());
         adapter = new DateilsAdapter(DetailsActivity.this, detailsBean.getData().getItems());
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UIUtils.showToast(detailsBean.getData().getItems().get(position).getGoods_name());
+//                UIUtils.showToast(detailsBean.getData().getItems().get(position).getGoods_name());
 
+                Intent intent = new Intent(DetailsActivity.this, PurchaseActivity.class);
+                intent.putExtra("goods_id",detailsBean.getData().getItems().get(position).getGoods_id());
+                startActivity(intent);
             }
         });
 

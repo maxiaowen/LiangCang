@@ -1,12 +1,13 @@
 package com.atguigu.liangcang.shop.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/7.
  */
 
-public class DetailsBean {
+public class DetailsBean implements Serializable{
 
     /**
      * meta : {"status":0,"server_time":"2017-07-07 14:55:30","account_id":0,"cost":0.0025849342346191,"errdata":null,"errmsg":""}
@@ -42,7 +43,7 @@ public class DetailsBean {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable{
         /**
          * status : 0
          * server_time : 2017-07-07 14:55:30
@@ -108,7 +109,7 @@ public class DetailsBean {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * has_more : true
          * num_items : 2565
@@ -143,7 +144,7 @@ public class DetailsBean {
             this.items = items;
         }
 
-        public static class ItemsBean {
+        public static class ItemsBean implements Serializable{
             /**
              * goods_id : 252823
              * goods_image : http://imgs-qn.iliangcang.com/ware/goods/big/2/252/252823.jpg
@@ -298,7 +299,7 @@ public class DetailsBean {
                 this.brand_info = brand_info;
             }
 
-            public static class BrandInfoBean {
+            public static class BrandInfoBean implements Serializable{
                 /**
                  * brand_id : 489
                  * brand_name : 读小库
