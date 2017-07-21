@@ -146,7 +146,7 @@ public class DetailsActivity extends BaseActivity {
             }
         });
 
-        Log.e("TAG","url=="+url);
+//        Log.e("TAG","url=="+url);
     }
 
     //解析数据

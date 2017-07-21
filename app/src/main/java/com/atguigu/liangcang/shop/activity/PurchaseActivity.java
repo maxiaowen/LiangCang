@@ -78,6 +78,8 @@ public class PurchaseActivity extends BaseActivity {
 
     private String url;
 
+    private String goods_id;
+
     /**
      * 装各个Fragment的集合
      */
@@ -96,7 +98,6 @@ public class PurchaseActivity extends BaseActivity {
     private FragmentTransaction ft;
 
 
-
     private DetailsFragment detailsFragment;
     private MallFragment mallFragment;
     private Bundle bundle;
@@ -104,8 +105,10 @@ public class PurchaseActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        String goods_id = getIntent().getStringExtra("goods_id");
+        goods_id = getIntent().getStringExtra("goods_id");
         url = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goods_id + "&sig=430BD99E6C913B8B8C3ED109737ECF15%7C830952120106768&v=1.0";
+
+        Log.e("TAG", "PurchaseActivity-------url==" + url);
 
         // 初始化Fragment
         fragments = new ArrayList<>();
@@ -169,8 +172,6 @@ public class PurchaseActivity extends BaseActivity {
         setData(purchaseBean);
 
 
-
-
     }
 
     private void setData(PurchaseBean data) {
@@ -204,6 +205,10 @@ public class PurchaseActivity extends BaseActivity {
 
 
         bundle.putSerializable("purchaseBean", data);
+        bundle.putString("goods_id",goods_id);
+
+        //默认选中首页-放在setOnCheckedChangeListener 执行之后
+        rgButton.check(R.id.rb_default);
 
     }
 
@@ -241,8 +246,7 @@ public class PurchaseActivity extends BaseActivity {
             }
         });
 
-        //默认选中首页-放在setOnCheckedChangeListener 执行之后
-        rgButton.check(R.id.rb_default);
+
     }
 
     /**

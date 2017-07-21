@@ -1,6 +1,7 @@
 package com.atguigu.liangcang.shop.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class MallFragment extends BaseFragment {
 
     @Override
     public View initView() {
-
+//
         View view = View.inflate(context, R.layout.fragment_mall, null);
         ButterKnife.bind(this, view);
         bundle = getArguments();
@@ -42,6 +43,7 @@ public class MallFragment extends BaseFragment {
 
             PurchaseBean purchaseBean = (PurchaseBean) bundle.getSerializable("purchaseBean");
 
+            Log.e("TAG", "MallFragment---purchaseBean--name==" + purchaseBean.getData().getItems().getGoods_name());
             String content = purchaseBean.getData().getItems().getGood_guide().getContent();
 
             tvContent.setText(content);
