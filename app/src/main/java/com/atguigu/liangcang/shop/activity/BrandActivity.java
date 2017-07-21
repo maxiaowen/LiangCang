@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -126,6 +127,14 @@ public class BrandActivity extends BaseActivity {
             }
         });
 
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            }
+        });
+
     }
 
     private void switchFrgment(int checkedId) {
@@ -192,6 +201,18 @@ public class BrandActivity extends BaseActivity {
         baseTitle.setText("品牌产品");
         ivBack.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

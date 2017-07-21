@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
 import com.atguigu.liangcang.shop.activity.DetailsActivity;
+import com.atguigu.liangcang.utils.UIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,48 +73,46 @@ public class GiftFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    private Intent intent;
+
 
     @OnClick({R.id.iv_gift, R.id.id_festival, R.id.id_love, R.id.id_day, R.id.id_friend, R.id.id_boy, R.id.id_parent, R.id.iv_setting})
     public void onViewClicked(View view) {
+        Intent intent = new Intent(context, DetailsActivity.class);
         switch (view.getId()) {
             case R.id.iv_gift:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[0]);
                 startActivity(intent);
                 break;
             case R.id.id_festival:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[1]);
                 startActivity(intent);
                 break;
             case R.id.id_love:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[2]);
                 startActivity(intent);
                 break;
             case R.id.id_day:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[3]);
                 startActivity(intent);
                 break;
             case R.id.id_friend:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[4]);
                 startActivity(intent);
                 break;
             case R.id.id_boy:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[5]);
                 startActivity(intent);
                 break;
             case R.id.id_parent:
-                intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("url", urls[6]);
                 startActivity(intent);
                 break;
             case R.id.iv_setting:
+                UIUtils.showToast("还没有送出礼物哦！");
                 break;
         }
+
+
+
     }
 }
