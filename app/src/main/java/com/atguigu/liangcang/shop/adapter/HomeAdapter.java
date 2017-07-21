@@ -3,7 +3,6 @@ package com.atguigu.liangcang.shop.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,8 +21,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static android.R.attr.type;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -71,7 +68,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         int itemViewType = -1;
         //根据位置，从列表中得到一个数据对象
         int home_type = datas.get(position).getHome_type();
-        Log.e("TAG", "type===" + type);
+//        Log.e("TAG", "type===" + type);
         if (home_type == 1) {
             itemViewType = TYPE_ONE;
         } else if (home_type == 2) {
@@ -89,7 +86,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
 
-        Log.e("TAG", "viewType===" + viewType);
+//        Log.e("TAG", "viewType===" + viewType);
 
         switch (viewType) {
             case TYPE_ONE://1

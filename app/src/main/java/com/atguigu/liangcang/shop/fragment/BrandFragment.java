@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.shop.fragment;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,6 +8,7 @@ import android.widget.ListView;
 
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.shop.activity.BrandActivity;
 import com.atguigu.liangcang.shop.adapter.BrandAdapter;
 import com.atguigu.liangcang.shop.bean.BrandBean;
 import com.atguigu.liangcang.utils.UIUtils;
@@ -84,8 +86,12 @@ public class BrandFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UIUtils.showToast(brandBean.getData().getItems().get(position).getBrand_name());
+//                UIUtils.showToast(brandBean.getData().getItems().get(position).getBrand_name());
 
+                Intent intent = new Intent(context, BrandActivity.class);
+                int brand_id = brandBean.getData().getItems().get(position).getBrand_id();
+                intent.putExtra("brand_id",brand_id+"");
+                startActivity(intent);
 
             }
         });
