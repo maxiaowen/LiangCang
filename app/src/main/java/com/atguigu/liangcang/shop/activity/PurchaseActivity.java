@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -246,6 +248,14 @@ public class PurchaseActivity extends BaseActivity {
             }
         });
 
+        //设置返回按钮的点击事件
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            }
+        });
 
     }
 
@@ -297,6 +307,19 @@ public class PurchaseActivity extends BaseActivity {
             return fragments.get(position);
         }
         return null;
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

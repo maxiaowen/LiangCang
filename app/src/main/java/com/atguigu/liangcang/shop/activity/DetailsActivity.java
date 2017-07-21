@@ -70,7 +70,6 @@ public class DetailsActivity extends BaseActivity {
     }
 
 
-
     private void showPopupWindow() {
         View popupView = View.inflate(this, R.layout.pop_details, null);
         popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
@@ -104,7 +103,6 @@ public class DetailsActivity extends BaseActivity {
         tv10013000 = (TextView) popupView.findViewById(R.id.tv_1001_3000);
         tv3000 = (TextView) popupView.findViewById(R.id.tv_3000);
         btn_kong = (Button) popupView.findViewById(R.id.btn_kong);
-
 
 
     }
@@ -163,8 +161,9 @@ public class DetailsActivity extends BaseActivity {
 //                UIUtils.showToast(detailsBean.getData().getItems().get(position).getGoods_name());
 
                 Intent intent = new Intent(DetailsActivity.this, PurchaseActivity.class);
-                intent.putExtra("goods_id",detailsBean.getData().getItems().get(position).getGoods_id());
+                intent.putExtra("goods_id", detailsBean.getData().getItems().get(position).getGoods_id());
                 startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
