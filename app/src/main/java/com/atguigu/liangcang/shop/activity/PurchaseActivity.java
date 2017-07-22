@@ -1,15 +1,20 @@
 package com.atguigu.liangcang.shop.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -77,6 +82,8 @@ public class PurchaseActivity extends BaseActivity {
     ImageView ivBiao;
     @Bind(R.id.tv_biao)
     TextView tvBiao;
+    @Bind(R.id.view_xian)
+    View viewXian;
 
     private String url;
 
@@ -100,19 +107,75 @@ public class PurchaseActivity extends BaseActivity {
     private FragmentTransaction ft;
 
 
+    private PurchaseBean purchaseBean;
+
+
     private DetailsFragment detailsFragment;
     private MallFragment mallFragment;
     private Bundle bundle;
 
+    private PopupWindow popupWindow;
+    private LinearLayout ll_layout;
+    private TextView tv_pop_name;
+    private TextView tv_pop_content;
+    private TextView tv_pop_price;
+    private ImageView iv_chahao;
+    private ImageView iv_tupian;
+    private Button btn_queren;
+    private LinearLayout ll_aaa;
+    private Button btn_join;
+    private Button btn_costco;
 
     @Override
     public void initView() {
         goods_id = getIntent().getStringExtra("goods_id");
         url = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goods_id + "&sig=430BD99E6C913B8B8C3ED109737ECF15%7C830952120106768&v=1.0";
 
-        Log.e("TAG", "PurchaseActivity-------url==" + url);
+//        Log.e("TAG", "PurchaseActivity-------url==" + url);
 
         // 初始化Fragment
+        initFragment();
+
+        //初始化PopupWindow
+        showPopupWindow();
+
+    }
+
+    private void showPopupWindow() {
+        View popupView = View.inflate(this, R.layout.pop_purchase, null);
+        popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
+
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x000000));
+        UIUtils.setPopupWindowTouchModal(popupWindow, false);
+
+        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+
+        ll_layout = (LinearLayout) popupView.findViewById(R.id.ll_layout);
+        tv_pop_name = (TextView) popupView.findViewById(R.id.tv_pop_name);
+        tv_pop_content = (TextView) popupView.findViewById(R.id.tv_pop_content);
+        tv_pop_price = (TextView) popupView.findViewById(R.id.tv_pop_price);
+        iv_chahao = (ImageView) popupView.findViewById(R.id.iv_chahao);
+        iv_tupian = (ImageView) popupView.findViewById(R.id.iv_tupian);
+        btn_queren = (Button) popupView.findViewById(R.id.btn_queren);
+        ll_aaa = (LinearLayout) popupView.findViewById(R.id.ll_aaa);
+        btn_join = (Button) popupView.findViewById(R.id.btn_join);
+        btn_costco = (Button) popupView.findViewById(R.id.btn_costco);
+
+
+    }
+
+    // 初始化Fragment
+    private void initFragment() {
         fragments = new ArrayList<>();
         detailsFragment = new DetailsFragment();
         mallFragment = new MallFragment();
@@ -126,7 +189,6 @@ public class PurchaseActivity extends BaseActivity {
 
         fragments.add(detailsFragment);
         fragments.add(mallFragment);
-
     }
 
     @Override
@@ -166,21 +228,21 @@ public class PurchaseActivity extends BaseActivity {
     //解析数据
     private void parseData(String json) {
 
-        PurchaseBean purchaseBean = JSON.parseObject(json, PurchaseBean.class);
+        purchaseBean = JSON.parseObject(json, PurchaseBean.class);
 
 //        Log.e("TAG", "PurchaseActivity--purchaseBean==" + purchaseBean.toString());
 
         //设置数据
-        setData(purchaseBean);
+        setData();
 
 
     }
 
-    private void setData(PurchaseBean data) {
+    private void setData() {
 
         //设置Banner 数据
         List<String> images = new ArrayList<>();
-        List<String> images_item = data.getData().getItems().getImages_item();
+        List<String> images_item = purchaseBean.getData().getItems().getImages_item();
         for (int i = 0; i < images_item.size(); i++) {
             images.add(images_item.get(i));
         }
@@ -188,29 +250,42 @@ public class PurchaseActivity extends BaseActivity {
                 .setImageLoader(new GlideImageLoader())
                 .start();
 
-        tvName.setText(data.getData().getItems().getOwner_name());
+        tvName.setText(purchaseBean.getData().getItems().getOwner_name());
 
-        tvCount.setText(data.getData().getItems().getLike_count());
+        tvCount.setText(purchaseBean.getData().getItems().getLike_count());
 
-        tvGoodsName.setText(data.getData().getItems().getGoods_name());
+        tvGoodsName.setText(purchaseBean.getData().getItems().getGoods_name());
 
-        tvDiscountPrice.setText("￥" + data.getData().getItems().getPrice());
+        tvDiscountPrice.setText("￥" + purchaseBean.getData().getItems().getPrice());
 
 
-        tvBiao.setText(data.getData().getItems().getBrand_info().getBrand_name());
+        tvBiao.setText(purchaseBean.getData().getItems().getBrand_info().getBrand_name());
 
         Picasso.with(this)
-                .load(data.getData().getItems().getBrand_info().getBrand_logo())
+                .load(purchaseBean.getData().getItems().getBrand_info().getBrand_logo())
                 .placeholder(R.drawable.atguigu_logo)
                 .error(R.drawable.atguigu_logo)
                 .into(ivBiao);
 
 
-        bundle.putSerializable("purchaseBean", data);
-        bundle.putString("goods_id",goods_id);
+        bundle.putSerializable("purchaseBean", purchaseBean);
+        bundle.putString("goods_id", goods_id);
 
         //默认选中首页-放在setOnCheckedChangeListener 执行之后
         rgButton.check(R.id.rb_default);
+
+
+        //设置PopupWindow中的数据
+
+        tv_pop_name.setText(purchaseBean.getData().getItems().getOwner_name());
+        tv_pop_content.setText(purchaseBean.getData().getItems().getGoods_name());
+        tv_pop_price.setText(purchaseBean.getData().getItems().getPrice());
+        Picasso.with(this)
+                .load(purchaseBean.getData().getItems().getGoods_image())
+                .placeholder(R.drawable.atguigu_logo)
+                .error(R.drawable.atguigu_logo)
+                .into(iv_tupian);
+
 
     }
 
@@ -256,6 +331,62 @@ public class PurchaseActivity extends BaseActivity {
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
             }
         });
+
+
+        llDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PurchaseActivity.this, BrandActivity.class);
+                intent.putExtra("brand_id", purchaseBean.getData().getItems().getBrand_info().getBrand_id());
+                startActivity(intent);
+            }
+        });
+
+        //设置弹出popupWindow
+        llSelecet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //相对某个控件的位置（正左下方），无偏移
+                popupWindow.showAsDropDown(viewXian);
+                ll_aaa.setVisibility(View.VISIBLE);
+                btn_queren.setVisibility(View.GONE);
+            }
+        });
+
+
+        //设置弹出popupWindow
+        tvJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //相对某个控件的位置（正左下方），无偏移
+                popupWindow.showAsDropDown(viewXian);
+                btn_queren.setVisibility(View.VISIBLE);
+                ll_aaa.setVisibility(View.GONE);
+            }
+        });
+
+        //设置弹出popupWindow
+        tvCostco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //相对某个控件的位置（正左下方），无偏移
+                popupWindow.showAsDropDown(viewXian);
+                btn_queren.setVisibility(View.VISIBLE);
+                ll_aaa.setVisibility(View.GONE);
+            }
+        });
+
+        //关闭popupWindow
+        iv_chahao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
 
     }
 
