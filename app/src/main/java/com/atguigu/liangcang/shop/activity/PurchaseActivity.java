@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseActivity;
 import com.atguigu.liangcang.base.BaseFragment;
 import com.atguigu.liangcang.shop.bean.PurchaseBean;
+import com.atguigu.liangcang.shop.customview.AddSubView;
 import com.atguigu.liangcang.shop.fragment.DetailsFragment;
 import com.atguigu.liangcang.shop.fragment.MallFragment;
 import com.atguigu.liangcang.utils.GlideImageLoader;
@@ -33,6 +35,9 @@ import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,13 +130,18 @@ public class PurchaseActivity extends BaseActivity {
     private LinearLayout ll_aaa;
     private Button btn_join;
     private Button btn_costco;
+    private AddSubView addSubView;
+    private TextView tv_type_name1;
+    private TextView tv_type_name2;
+    private TagFlowLayout flowlayout1;
+    private TagFlowLayout flowlayout2;
 
     @Override
     public void initView() {
         goods_id = getIntent().getStringExtra("goods_id");
         url = "http://mobile.iliangcang.com/goods/goodsDetail?app_key=Android&goods_id=" + goods_id + "&sig=430BD99E6C913B8B8C3ED109737ECF15%7C830952120106768&v=1.0";
 
-//        Log.e("TAG", "PurchaseActivity-------url==" + url);
+        Log.e("TAG", "PurchaseActivity-------url==" + url);
 
         // 初始化Fragment
         initFragment();
@@ -170,6 +180,11 @@ public class PurchaseActivity extends BaseActivity {
         ll_aaa = (LinearLayout) popupView.findViewById(R.id.ll_aaa);
         btn_join = (Button) popupView.findViewById(R.id.btn_join);
         btn_costco = (Button) popupView.findViewById(R.id.btn_costco);
+        addSubView = (AddSubView) popupView.findViewById(R.id.addSubView);
+        flowlayout1 = (TagFlowLayout) popupView.findViewById(R.id.flowlayout1);
+        flowlayout2 = (TagFlowLayout) popupView.findViewById(R.id.flowlayout2);
+        tv_type_name1 = (TextView) popupView.findViewById(R.id.tv_type_name1);
+        tv_type_name2 = (TextView) popupView.findViewById(R.id.tv_type_name2);
 
 
     }
@@ -285,9 +300,123 @@ public class PurchaseActivity extends BaseActivity {
                 .placeholder(R.drawable.atguigu_logo)
                 .error(R.drawable.atguigu_logo)
                 .into(iv_tupian);
+        addSubView.setMaxvalue(Integer.parseInt(purchaseBean.getData().getItems().getSku_inv().get(0).getAmount()));
+
+        List<PurchaseBean.DataBean.ItemsBean.SkuInfoBean> sku_info = purchaseBean.getData().getItems().getSku_info();
+
+
+        if (sku_info.size() == 1) {
+
+            setInfo1(sku_info);
+        } else {
+
+            setInfo1(sku_info);
+            setInfo2(sku_info);
+        }
 
 
     }
+
+
+    private void setInfo1(List<PurchaseBean.DataBean.ItemsBean.SkuInfoBean> sku_info) {
+        tv_type_name1.setText(sku_info.get(0).getType_name());
+
+        final String[] mVals = new String[sku_info.get(0).getAttrList().size()];
+        final String[] urls = new String[sku_info.get(0).getAttrList().size()];
+
+        for (int i = 0; i < sku_info.get(0).getAttrList().size(); i++) {
+            mVals[i] = sku_info.get(0).getAttrList().get(i).getAttr_name();
+            urls[i] = sku_info.get(0).getAttrList().get(i).getImg_path();
+
+        }
+
+
+        final LayoutInflater mInflater = LayoutInflater.from(this);
+        flowlayout1.setAdapter(new TagAdapter<String>(mVals) {
+
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView tv = (TextView) mInflater.inflate(R.layout.tv, flowlayout1, false);
+                tv.setText(s);
+                return tv;
+            }
+
+            @Override
+            public boolean setSelected(int position, String s) {
+                return s.equals(mVals[0]);
+            }
+        });
+
+
+        flowlayout1.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+//                UIUtils.showToast(mVals[position]);
+                if(!urls[position].equals("")) {
+                    Picasso.with(PurchaseActivity.this)
+                            .load(urls[position])
+                            .placeholder(R.drawable.atguigu_logo)
+                            .error(R.drawable.atguigu_logo)
+                            .into(iv_tupian);
+                }
+                return true;
+            }
+        });
+
+
+    }
+
+
+    private void setInfo2(List<PurchaseBean.DataBean.ItemsBean.SkuInfoBean> sku_info) {
+        tv_type_name2.setVisibility(View.VISIBLE);
+        tv_type_name2.setText(sku_info.get(1).getType_name());
+        flowlayout2.setVisibility(View.VISIBLE);
+
+
+        final String[] mVals = new String[sku_info.get(1).getAttrList().size()];
+        final String[] urls = new String[sku_info.get(1).getAttrList().size()];
+
+        for (int i = 0; i < sku_info.get(1).getAttrList().size(); i++) {
+            mVals[i] = sku_info.get(1).getAttrList().get(i).getAttr_name();
+            urls[i] = sku_info.get(1).getAttrList().get(i).getImg_path();
+
+        }
+
+
+        final LayoutInflater mInflater = LayoutInflater.from(this);
+        flowlayout2.setAdapter(new TagAdapter<String>(mVals) {
+
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView tv = (TextView) mInflater.inflate(R.layout.tv, flowlayout2, false);
+                tv.setText(s);
+                return tv;
+            }
+
+            //默认选中哪一条
+            @Override
+            public boolean setSelected(int position, String s) {
+                return s.equals(mVals[0]);
+            }
+        });
+
+
+        flowlayout2.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+//                UIUtils.showToast(mVals[position]);
+//                if(!urls[position].equals("")) {
+//                    Picasso.with(PurchaseActivity.this)
+//                            .load(urls[position])
+//                            .placeholder(R.drawable.atguigu_logo)
+//                            .error(R.drawable.atguigu_logo)
+//                            .into(iv_tupian);
+//                }
+                return true;
+            }
+        });
+    }
+
 
     @Override
     public void initListener() {
@@ -329,6 +458,17 @@ public class PurchaseActivity extends BaseActivity {
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            }
+        });
+
+
+        //点击进入购物车
+        baseCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PurchaseActivity.this, ShoppingcartActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 

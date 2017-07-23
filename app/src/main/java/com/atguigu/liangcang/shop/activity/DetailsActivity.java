@@ -183,6 +183,19 @@ public class DetailsActivity extends BaseActivity {
             }
         });
 
+        //点击进入购物车
+        baseCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailsActivity.this, ShoppingcartActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+        });
+
+
+
+
         //设置点击弹出 popupWindow
         llPrice.setOnClickListener(new View.OnClickListener() {
             @Override

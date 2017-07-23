@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.shop.fragment;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.shop.activity.ShoppingcartActivity;
 import com.atguigu.liangcang.shop.adapter.ShopAdapter;
 
 import java.util.ArrayList;
@@ -64,11 +66,22 @@ public class ShopFragment extends BaseFragment {
         adapter = new ShopAdapter(getChildFragmentManager(), fragments);
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
-
-
-
     }
 
+
+    @Override
+    public void initListener() {
+        super.initListener();
+        //点击进入购物车
+        baseCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShoppingcartActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {
