@@ -16,6 +16,7 @@ import com.atguigu.liangcang.shop.customview.AddSubView;
 import com.atguigu.liangcang.utils.CartStorage;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -218,6 +219,24 @@ public class ShoppingcartAdapter extends RecyclerView.Adapter {
             checkboxAll.setChecked(false);
         }
 
+    }
+
+
+    public ArrayList<PurchaseBean> getList(){
+
+         ArrayList<PurchaseBean> purchaseBeens = new ArrayList<>();
+
+        for(int i = 0; i < datas.size(); i++) {
+
+             PurchaseBean purchaseBean = datas.get(i);
+             PurchaseBean.DataBean.ItemsBean itemsBean = purchaseBean.getData().getItems();
+
+            if(itemsBean.isCheck()) {
+
+                purchaseBeens.add(purchaseBean);
+            }
+        }
+        return purchaseBeens;
     }
 
 

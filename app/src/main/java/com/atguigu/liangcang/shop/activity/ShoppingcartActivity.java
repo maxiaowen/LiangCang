@@ -1,5 +1,6 @@
 package com.atguigu.liangcang.shop.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -16,6 +17,8 @@ import com.atguigu.liangcang.shop.adapter.ShoppingcartAdapter;
 import com.atguigu.liangcang.shop.bean.PurchaseBean;
 import com.atguigu.liangcang.utils.CartStorage;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -109,6 +112,22 @@ public class ShoppingcartActivity extends BaseActivity {
                     tvCompile.setText("编辑");
                     adapter.showDelete(false);
                 }
+            }
+        });
+
+
+
+        //结算
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingcartActivity.this, OrderActivity.class);
+
+                ArrayList<PurchaseBean> list = adapter.getList();
+
+                intent.putExtra("list",(Serializable)list);
+
+                startActivity(intent);
             }
         });
 
