@@ -7,6 +7,8 @@ import android.os.Handler;
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
+import cn.sharesdk.framework.ShareSDK;
+
 
 /**
  * Created by Administrator on 2017/7/6.
@@ -41,5 +43,10 @@ public class MyApplication extends Application {
         context = this;
         handler = new Handler();
         pid = android.os.Process.myPid();
+
+
+        //初始化ShareSDK
+        ShareSDK.initSDK(this);
+
     }
 }
