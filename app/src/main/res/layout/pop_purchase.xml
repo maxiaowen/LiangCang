@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     app:maxValue="12"
-                    app:minValue="0"
+                    app:minValue="1"
                     app:value="1" />
 
 

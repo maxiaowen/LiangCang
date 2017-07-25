@@ -25,10 +25,12 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.liangcang.R;
 import com.atguigu.liangcang.base.BaseActivity;
 import com.atguigu.liangcang.base.BaseFragment;
+import com.atguigu.liangcang.common.MyApplication;
 import com.atguigu.liangcang.shop.bean.PurchaseBean;
 import com.atguigu.liangcang.shop.customview.AddSubView;
 import com.atguigu.liangcang.shop.fragment.DetailsFragment;
 import com.atguigu.liangcang.shop.fragment.MallFragment;
+import com.atguigu.liangcang.utils.CartStorage;
 import com.atguigu.liangcang.utils.GlideImageLoader;
 import com.atguigu.liangcang.utils.UIUtils;
 import com.squareup.picasso.Picasso;
@@ -250,6 +252,9 @@ public class PurchaseActivity extends BaseActivity {
         //设置数据
         setData();
 
+        //设置PopupWindow中的数据
+        setPopupWindowData();
+
 
     }
 
@@ -290,7 +295,10 @@ public class PurchaseActivity extends BaseActivity {
         rgButton.check(R.id.rb_default);
 
 
-        //设置PopupWindow中的数据
+    }
+
+    //设置PopupWindow中的数据
+    private void setPopupWindowData() {
 
         tv_pop_name.setText(purchaseBean.getData().getItems().getOwner_name());
         tv_pop_content.setText(purchaseBean.getData().getItems().getGoods_name());
@@ -302,9 +310,19 @@ public class PurchaseActivity extends BaseActivity {
                 .into(iv_tupian);
         addSubView.setMaxvalue(Integer.parseInt(purchaseBean.getData().getItems().getSku_inv().get(0).getAmount()));
 
+        addSubView.setOnNumberChangeListener(new AddSubView.OnNumberChangeListener() {
+            @Override
+            public void numberChange(int value) {
+                //把Bean对象更新一下
+                purchaseBean.getData().getItems().setNumber(value);
+                //更新存储到本地或者服务器上
+//                CartStorage.getInstance(MyApplication.getContext()).updateData(purchaseBean);
+
+            }
+
+        });
+
         List<PurchaseBean.DataBean.ItemsBean.SkuInfoBean> sku_info = purchaseBean.getData().getItems().getSku_info();
-
-
         if (sku_info.size() == 1) {
 
             setInfo1(sku_info);
@@ -313,8 +331,6 @@ public class PurchaseActivity extends BaseActivity {
             setInfo1(sku_info);
             setInfo2(sku_info);
         }
-
-
     }
 
 
@@ -352,7 +368,7 @@ public class PurchaseActivity extends BaseActivity {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
 //                UIUtils.showToast(mVals[position]);
-                if(!urls[position].equals("")) {
+                if (!urls[position].equals("")) {
                     Picasso.with(PurchaseActivity.this)
                             .load(urls[position])
                             .placeholder(R.drawable.atguigu_logo)
@@ -524,6 +540,30 @@ public class PurchaseActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+            }
+        });
+
+
+        //设置PopupWindow中的点击监听
+
+        //商品添加到购物车
+        btn_queren.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                //添加购物车
+                CartStorage.getInstance(MyApplication.getContext()).addData(purchaseBean);
+                UIUtils.showToast("添加购物车成功");
+            }
+        });
+
+        btn_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                //添加购物车
+                CartStorage.getInstance(MyApplication.getContext()).addData(purchaseBean);
+                UIUtils.showToast("添加购物车成功");
             }
         });
 

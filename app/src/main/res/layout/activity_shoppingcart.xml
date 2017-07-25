@@ -105,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="130dp"
+            android:paddingLeft="110dp"
             android:text="+￥0.00（礼物包装费）" />
 
 
@@ -137,7 +137,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="110dp"
+            android:paddingLeft="90dp"
             android:text="￥0.00（限中国大陆地区）" />
 
     </LinearLayout>
