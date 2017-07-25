@@ -68,8 +68,20 @@ public class OrderActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        datas = (ArrayList<PurchaseBean>) getIntent().getSerializableExtra("list");
-//        Log.e("TAG","OrderActivity---datas===="+datas.get(0).getData().getItems().getGoods_name());
+        datas = new ArrayList<PurchaseBean>();
+        ArrayList<PurchaseBean> list = (ArrayList<PurchaseBean>) getIntent().getSerializableExtra("list");
+        PurchaseBean purchaseBean = (PurchaseBean)getIntent().getSerializableExtra("bean");
+
+        if(list != null && list.size() > 0) {
+            datas.addAll(list);
+        }
+
+        if(purchaseBean != null) {
+            datas.add(purchaseBean);
+        }
+
+
+
         adapter = new OrderAdapter(this, datas);
 
         tvPrice.setText("￥" + getTotalPrice());

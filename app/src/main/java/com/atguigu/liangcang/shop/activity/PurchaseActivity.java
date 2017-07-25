@@ -128,7 +128,8 @@ public class PurchaseActivity extends BaseActivity {
     private TextView tv_pop_price;
     private ImageView iv_chahao;
     private ImageView iv_tupian;
-    private Button btn_queren;
+    private Button btn_queren1;
+    private Button btn_queren2;
     private LinearLayout ll_aaa;
     private Button btn_join;
     private Button btn_costco;
@@ -178,7 +179,8 @@ public class PurchaseActivity extends BaseActivity {
         tv_pop_price = (TextView) popupView.findViewById(R.id.tv_pop_price);
         iv_chahao = (ImageView) popupView.findViewById(R.id.iv_chahao);
         iv_tupian = (ImageView) popupView.findViewById(R.id.iv_tupian);
-        btn_queren = (Button) popupView.findViewById(R.id.btn_queren);
+        btn_queren1 = (Button) popupView.findViewById(R.id.btn_queren1);
+        btn_queren2 = (Button) popupView.findViewById(R.id.btn_queren2);
         ll_aaa = (LinearLayout) popupView.findViewById(R.id.ll_aaa);
         btn_join = (Button) popupView.findViewById(R.id.btn_join);
         btn_costco = (Button) popupView.findViewById(R.id.btn_costco);
@@ -506,7 +508,8 @@ public class PurchaseActivity extends BaseActivity {
                 //相对某个控件的位置（正左下方），无偏移
                 popupWindow.showAsDropDown(viewXian);
                 ll_aaa.setVisibility(View.VISIBLE);
-                btn_queren.setVisibility(View.GONE);
+                btn_queren1.setVisibility(View.GONE);
+                btn_queren2.setVisibility(View.GONE);
             }
         });
 
@@ -518,7 +521,7 @@ public class PurchaseActivity extends BaseActivity {
 
                 //相对某个控件的位置（正左下方），无偏移
                 popupWindow.showAsDropDown(viewXian);
-                btn_queren.setVisibility(View.VISIBLE);
+                btn_queren1.setVisibility(View.VISIBLE);
                 ll_aaa.setVisibility(View.GONE);
             }
         });
@@ -530,7 +533,7 @@ public class PurchaseActivity extends BaseActivity {
 
                 //相对某个控件的位置（正左下方），无偏移
                 popupWindow.showAsDropDown(viewXian);
-                btn_queren.setVisibility(View.VISIBLE);
+                btn_queren2.setVisibility(View.VISIBLE);
                 ll_aaa.setVisibility(View.GONE);
             }
         });
@@ -547,7 +550,7 @@ public class PurchaseActivity extends BaseActivity {
         //设置PopupWindow中的点击监听
 
         //商品添加到购物车
-        btn_queren.setOnClickListener(new View.OnClickListener() {
+        btn_queren1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
@@ -564,6 +567,28 @@ public class PurchaseActivity extends BaseActivity {
                 //添加购物车
                 CartStorage.getInstance(MyApplication.getContext()).addData(purchaseBean);
                 UIUtils.showToast("添加购物车成功");
+            }
+        });
+
+
+
+        btn_queren2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PurchaseActivity.this, OrderActivity.class);
+                intent.putExtra("bean",purchaseBean);
+
+                startActivity(intent);
+            }
+        });
+
+        btn_costco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PurchaseActivity.this, OrderActivity.class);
+                intent.putExtra("bean",purchaseBean);
+
+                startActivity(intent);
             }
         });
 
